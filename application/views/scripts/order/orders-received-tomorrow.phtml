@@ -1,0 +1,13 @@
+<div id="orders-received-tomorrow">
+    <h4>Zamówienia do odbioru <?php echo $this->receivementDate; ?></h4>
+    <div class="data">
+        <?php if($this->orders->count()): ?>
+            <?php $first = true; ?>
+            <?php foreach($this->orders as $order): ?>
+                <div class="order-cell"><?php echo $order->unique; ?></div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="order-cell"><?php echo "Brak zamówień"; ?></div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+/* 
+    Document   : ie
+    Created on : 2012-09-15, 11:38:06
+    Author     : piter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+fieldset.grid-elements{
+/*    border: 1px solid red;*/
+    display: block;
+    text-align: left;
+    padding: 15px 5px;
+    float: left;
+    margin: 5px;
+/*    width: 300px;*/
+}
+
+fieldset.grid-elements select, 
+fieldset.grid-elements input{
+    margin: 0;
+    padding: 0;
+}
+
+fieldset.grid-elements button{
+/*    padding: 0;*/
+/*    margin:0;*/
+}
+
+a.column-action{
+    width: 75px;
+    height: 30px;
+/*    margin: 15px 0 5px 0;*/
+/*    left: 50%;*/
+/*    top: 50%;*/
+/*    margin-left: -37px;*/
+    margin: 15px;
+/*    position: relative;*/
+}
+
+td.action-column div{
+    vertical-align: middle;
+/*    height: 100%;*/
+}
+
+td.action-column{
+/*    width: 150px !important;*/
+/*    border: 1px solid red;*/
+/*    vertical-align: central;*/
+/*    position: relative;*/
+}

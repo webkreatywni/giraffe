@@ -1,0 +1,50 @@
+<?php echo $this->doctype(); ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+    <head>
+        <?php echo $this->headTitle($this->title); ?>
+        <?php echo $this->headMeta(); ?>
+        <?php echo $this->headLink(); ?>
+        <?php echo $this->headScript(); ?>
+    </head>
+    <body>
+        <div id="main-container">
+            <a href="<?php echo $this->url(array(), 'default'); ?>" id="logo"></a>
+            <div id="navigation" class="m-padding">
+                <?php 
+                    $url = $this->url(array(), 'order_create', true);
+                    $class = ($url == $this->currentUri) ? 'active' : '';
+                ?>
+                <a class="<?php echo $class; ?>" href="<?php echo $url;  ?>">Nowe zamówienie</a>
+                <span class="navigation-separator">/</span>
+                <?php 
+                    $url = $this->url(array(), 'order_list', true);
+                    $class = ($url == $this->currentUri) ? 'active' : '';
+                ?>
+                <a class="<?php echo $class; ?>" href="<?php echo $url; ?>">Wszystkie zamówienia(<?php echo $this->ordersNumbers['all']; ?>)</a>
+                <span class="navigation-separator">/</span>
+                <?php 
+                    $url = $this->url(array(), 'order_list_paid', true);
+                    $class = ($url == $this->currentUri) ? 'active' : '';
+                ?>
+                <a class="<?php echo $class; ?>" href="<?php echo $this->url(array(), 'order_list_paid'); ?>">Zamówienia opłacone(<?php echo $this->ordersNumbers['paid']; ?>)</a>
+                <span class="navigation-separator">/</span>
+                <?php 
+                    $url = $this->url(array(), 'order_list_unpaid', true);
+                    $class = ($this->currentUri == $url) ? 'active' : '';
+                ?>
+                <a class="<?php echo $class; ?>" href="<?php echo $this->url(array(), 'order_list_unpaid'); ?>">Zamówienia nieopłacone(<?php echo $this->ordersNumbers['unpaid']; ?>)</a>
+                <span class="navigation-separator">/</span>
+                <?php 
+                    $url = $this->url(array(), 'order_list_sent', true);
+                    $class = ($url == $this->currentUri) ? 'active' : '';
+                ?>
+                <a class="<?php echo $class; ?>" href="<?php echo $this->url(array(), 'order_list_sent'); ?>">Zamówienia wysłane(<?php echo $this->ordersNumbers['sent']; ?>)</a>
+            </div>
+            <h3><?php echo $this->title; ?></h3>
+            <?php echo $this->layout()->content; ?>
+        </div>
+    </body>
+</html>
+
+
