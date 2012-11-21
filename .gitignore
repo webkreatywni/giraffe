@@ -4,3 +4,4 @@ library/Zend*
 .zfproject*
 .buildpath
 .settings
+.idea
