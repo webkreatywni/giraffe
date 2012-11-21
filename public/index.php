@@ -17,6 +17,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
     get_include_path(),
 	'/var/www/s17u67/html/aplikacja/library/ZendFramework-1.11.13/library',
+    realpath(APPLICATION_PATH . '/../library/ZendFramework-1.11.13/library'),
 )));
 
 /** Zend_Application */

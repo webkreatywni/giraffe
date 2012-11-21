@@ -2,7 +2,7 @@
 
 class Application_Model_DbTable_Order extends Zend_Db_Table_Abstract
 {
-
+    protected $_rowClass = 'Application_Model_DbTable_Order_Row';
     protected $_name = 'orders';
     protected $_defaultSort = 'date_of_payment';
     protected $_defaultDir = 'asc';
@@ -237,6 +237,19 @@ class Application_Model_DbTable_Order extends Zend_Db_Table_Abstract
     {
         $rowset = $this->getPaidSentOrders();
         return $rowset->count();
+    }
+
+    public function getLastOrderId()
+    {
+        $id = null;
+        $select = $this->select()->order('id DESC')->limit(1);
+        $row = $this->fetchRow($select);
+
+        if($row instanceof Zend_Db_Table_Row){
+            $id = $row->id;
+        }
+
+        return $id;
     }
 }
 
