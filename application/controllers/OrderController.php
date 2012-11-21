@@ -79,14 +79,15 @@ class OrderController extends My_Controller_Action
     public function createAction()
     {
         $this->view->title = "Tworzenie nowego zamówienia";
-        
-        $form = new Application_Form_Order;
-        
+        $model = new Application_Model_DbTable_Order();
+        $lastId = (int) $model->getLastOrderId() + 1;
+        $form = new Application_Form_Order();
+        $form->setDefault('invoice_id', $lastId);
+
         if($this->getRequest()->isPost()){
             if($form->isValid($this->getRequest()->getPost())){
                 $data = $form->getValues();
-                $model = new Application_Model_DbTable_Order();
-                
+
                 $data = $this->_filterDataForCRUD($data);
                 
                 $id = $model->insert($data);
@@ -94,7 +95,7 @@ class OrderController extends My_Controller_Action
                         'update', 'order', null, array('order_id' => $id));
             }
         }
-        
+
         $this->view->form = $form;
         
     }
