@@ -9,6 +9,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $this->getResource('router');
         // usuwa trasy w postaci /kontroler/akcja
 //        $router->removeDefaultRoutes();
+
         $standard_route = new Zend_Controller_Router_Route(
             'zamowienie/lista/:page',
             array('controller'=>'order',
