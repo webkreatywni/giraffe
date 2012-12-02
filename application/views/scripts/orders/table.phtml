@@ -109,6 +109,11 @@
                     $sortClass = ($this->sort == 'client') ? "class=\"sort-{$this->dir}\"" : "class=\"sort-desc\"";
                     $sortDir = ($this->sort == 'client') ? $dir : "desc";
                 ?>
+                <th class="text_left">Status</th>
+                <?php
+                    $sortClass = ($this->sort == 'status') ? "class=\"sort-{$this->dir}\"" : "class=\"sort-desc\"";
+                    $sortDir = ($this->sort == 'status') ? $dir : "desc";
+                ?>
                 <th class="text_left"><a <?php echo $sortClass; ?> href="<?php echo $this->urlQuery(array(), null, null, null, array('sort' => 'client', 'dir' => $sortDir)); ?>">Klient</a></th>
                 <?php 
                     $sortClass = ($this->sort == 'date_of_payment') ? "class=\"sort-{$this->dir}\"" : "class=\"sort-desc\"";
@@ -150,6 +155,7 @@
                     <td class="frame"><?php echo $order->frame; ?></td>
                     <td class="wheels"><?php echo $order->wheels; ?></td>
                     <td class="bonus text_left"><?php echo $order->bonus; ?></td>
+                    <td class="status"><?php echo $this->orderStatus($order->status); ?></td>
                     <td class="client text_left"><?php echo $order->client; ?></td>
                     <td class="date_of_payment"><?php echo $this->cellNullRenderer($order->date_of_payment); ?><br /><span class="days-left"><?php echo $days_message; ?></span></td>
                     <td class="date_of_receipt"><?php echo $this->cellNullRenderer($order->date_of_receipt); ?></td>

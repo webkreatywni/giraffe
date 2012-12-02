@@ -80,16 +80,16 @@ class OrderController extends My_Controller_Action
     {
         $this->view->title = "Tworzenie nowego zamówienia";
         $model = new Application_Model_DbTable_Order();
-        $lastId = (int) $model->getLastOrderId() + 1;
+        $nextInvoiceId = $model->getNextInvoiceId();
         $form = new Application_Form_Order();
-        $form->setDefault('invoice_id', $lastId);
+        $form->setDefault('unique', $nextInvoiceId);
+//        $form->setDefault('status', 'other');
 
         if($this->getRequest()->isPost()){
             if($form->isValid($this->getRequest()->getPost())){
                 $data = $form->getValues();
-
                 $data = $this->_filterDataForCRUD($data);
-                
+
                 $id = $model->insert($data);
                 return $this->_helper->redirector(
                         'update', 'order', null, array('order_id' => $id));
@@ -126,7 +126,7 @@ class OrderController extends My_Controller_Action
         
         $model = new Application_Model_DbTable_Order();
         $form = new Application_Form_Order;
-        
+
         try{
             /* @var $orders Zend_Db_Table_Rowset */
             $orders = $model->find($id);
@@ -183,7 +183,9 @@ class OrderController extends My_Controller_Action
         
         $paginator->setCurrentPageNumber($page);
         $paginator->setItemCountPerPage(10);
-        
+
+        $this->_gridOptions['dir'] = $dir;
+        $this->_gridOptions['sort'] = $sort;
         $this->_gridOptions['routeName'] = 'order_list';
         $this->_gridOptions['paginator'] = $paginator;
         $this->view->gridOptions = $this->_gridOptions;
@@ -317,6 +319,8 @@ class OrderController extends My_Controller_Action
         
         $this->_gridOptions['routeName'] = $this->_currentRouteName;
         $this->_gridOptions['paginator'] = $paginator;
+        $this->_gridOptions['dir'] = $dir;
+        $this->_gridOptions['sort'] = $sort;
         $this->view->gridOptions = $this->_gridOptions;
     }
 
@@ -338,6 +342,8 @@ class OrderController extends My_Controller_Action
         $paginator->setItemCountPerPage(10);
         $this->_gridOptions['routeName'] = $this->_currentRouteName;
         $this->_gridOptions['paginator'] = $paginator;
+        $this->_gridOptions['dir'] = $dir;
+        $this->_gridOptions['sort'] = $sort;
         $this->view->gridOptions = $this->_gridOptions;
     }
 
@@ -359,6 +365,8 @@ class OrderController extends My_Controller_Action
         $paginator->setItemCountPerPage(10);
         $this->_gridOptions['routeName'] = $this->_currentRouteName;
         $this->_gridOptions['paginator'] = $paginator;
+        $this->_gridOptions['dir'] = $dir;
+        $this->_gridOptions['sort'] = $sort;
         $this->view->gridOptions = $this->_gridOptions;
     }
     
@@ -369,10 +377,6 @@ class OrderController extends My_Controller_Action
         $this->view->orders = $Order->getOrdersReceivedOn($date);
         $this->view->receivementDate = $date;
     }
-    
-    
-    public function postDispatch()
-    {}
 }
 
 
