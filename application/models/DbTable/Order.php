@@ -209,6 +209,12 @@ class Application_Model_DbTable_Order extends Zend_Db_Table_Abstract
         }
     }
     
+    public function getUnpaidNotSentOrders()
+    {
+        $rowset = $this->fetchAll($this->getUnpaidNotSentOrdersSelect());
+        return $rowset;
+    }
+
     public function getUnpaidNotSentOrdersCount()
     {
         $rowset = $this->fetchAll($this->getUnpaidNotSentOrdersSelect());
@@ -239,17 +245,48 @@ class Application_Model_DbTable_Order extends Zend_Db_Table_Abstract
         return $rowset->count();
     }
 
-    public function getLastOrderId()
+    public function getLastOrderSelect()
     {
-        $id = null;
-        $select = $this->select()->order('id DESC')->limit(1);
-        $row = $this->fetchRow($select);
+        $select = $this->select()->order('unique DESC')->limit(1);
+        return $select;
+    }
 
-        if($row instanceof Zend_Db_Table_Row){
-            $id = $row->id;
+    public function getLastOrderWithInvoiceId()
+    {
+        $select = $this->getLastOrderSelect();
+        $row = $this->fetchRow($select);
+        return $row;
+    }
+
+    public function getNextInvoiceId()
+    {
+        $invoiceId = null;
+        $row = $this->getLastOrderWithInvoiceId();
+
+        if(!is_null($row)){
+            $invoiceId = $this->exportNumberFromInvoiceId($row->unique);
         }
 
-        return $id;
+        $invoiceId = (int) $invoiceId + 1;
+        return $invoiceId;
+    }
+
+    protected function exportNumberFromInvoiceId($invoiceId)
+    {
+        $result = null;
+        $regexp = '/([0-9]+)/';
+        $matches = array();
+
+        if(preg_match_all($regexp, $invoiceId, $matches)){
+            if(array_key_exists(1, $matches)){
+                if(is_array($matches[1])) {
+                    $matches[1] = implode('', $matches[1]);
+                }
+                $result = (int) $matches[1];
+            }
+        }
+
+        return $result;
     }
 }
 
